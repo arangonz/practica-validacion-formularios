@@ -1,6 +1,9 @@
 meter {
-  width: 200px;
-  height: 15px;
-  display: block;
-  margin-top: 5px;
+    width: 200px;
+    height: 15px;
+    display: block;
+    margin-top: 5px;
+}
+#nombre,#apellidos,#telefono,#email,#demandante,#nifCif,#nombreEmpresa,#direccion,#cp,#localidad,#provincia,#pais,#iban,#pago,#usuario,#contrasena {
+	background-color: #FFF3DC;
 }

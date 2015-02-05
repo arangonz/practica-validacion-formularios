@@ -1,5 +1,5 @@
 var checked = false; //variable true si el radio Empresa esta seleccionado
-var valorComplejidad=0;
+var valorComplejidad = 0;
 $('#formulario').validate({
     rules: {
         // simple rule, converted to {required:true}
@@ -17,7 +17,11 @@ $('#formulario').validate({
         },
         email: {
             required: true,
-            email: true
+            email: true,
+            remote: {
+                url: 'php/evaluar-email.php',
+                type: 'get',
+            }
         },
         email2: {
             equalTo: '#email'
@@ -85,6 +89,11 @@ $('#formulario').validate({
             equalTo: '#contrasena'
         }
 
+    },
+    messages: {
+        email: {
+            remote: jQuery.validator.format("El email introducido ya esta en uso.")
+        },
     }
 });
 
@@ -160,7 +169,7 @@ $('#contrasena').focusin(function() {
         minimumChars: 6
     }, function(valid, complexity) {
         $('#complejidad').val(complexity);
-        valorComplejidad=complexity;
+        valorComplejidad = complexity;
 
         if (complexity < 20) {
             $('#labelComplejidad').html('Contraseña debil');
@@ -176,7 +185,7 @@ $('#contrasena').focusin(function() {
 COMPLEJIDAD MINIMA DE LA CONTRASEÑA
 */
 jQuery.validator.addMethod('complejidad', function() {
-    if (valorComplejidad<20) {
+    if (valorComplejidad < 20) {
         return false;
     } else {
         return true;
