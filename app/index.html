@@ -203,7 +203,7 @@
             <div class="form-group control-group">
                 <label class="col-md-4 control-label" for="usuario">Usuario</label>
                 <div class="col-md-4">
-                    <input id="usuario" name="usuario" placeholder="" class="form-control input-md" type="text">
+                    <input id="usuario" name="usuario" placeholder="" class="form-control input-md" type="text" disabled="true">
 
                 </div>
             </div>
@@ -213,6 +213,8 @@
                 <label class="col-md-4 control-label" for="contrasena">Contraseña</label>
                 <div class="col-md-4">
                     <input id="contrasena" name="contrasena" placeholder="" class="form-control input-md" type="password">
+                     <meter value="0" id="complejidad" low="20" high="40" max="100" min="0" ></meter>
+                     <label id="labelComplejidad"></label>
                 </div>
             </div>
 
@@ -249,7 +251,10 @@
     <!-- endbuild -->
 
     <!-- build:js({app,.tmp}) scripts/main.js -->
-    <script src="bower_components/jquery-validate/dist/additional-methods.js"></script>
+    <script src="scripts/additional-methods.js"></script>
+    <script src="scripts/messages_es.js"></script>
+    <script src="scripts/jquery.complexify.js"></script>
+    <script src="scripts/jquery.complexify.banlist.js"></script>
     <script src="scripts/main.js"></script>
     <!-- endbuild -->
 </body>

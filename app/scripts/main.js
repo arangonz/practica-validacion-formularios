@@ -1,5 +1,5 @@
-
-var checked=false;//variable true si el radio Empresa esta seleccionado
+var checked = false; //variable true si el radio Empresa esta seleccionado
+var valorComplejidad=0;
 $('#formulario').validate({
     rules: {
         // simple rule, converted to {required:true}
@@ -20,15 +20,31 @@ $('#formulario').validate({
             email: true
         },
         email2: {
-            equalTo: email
+            equalTo: '#email'
         },
         demandante: {
             required: true
         },
         nifCif: {
             required: true,
-            cifES:{depends:function(){if(checked===true){return true;}else{return false;}}},
-            nifES:{depends:function(){if(checked===false){return true;}else{return false;}}}
+            cifES: {
+                depends: function() {
+                    if (checked === true) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            },
+            nifES: {
+                depends: function() {
+                    if (checked === false) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            }
         },
         nombreEmpresa: {
             required: true
@@ -51,19 +67,22 @@ $('#formulario').validate({
             required: true
         },
         iban: {
-            required: true
+            required: true,
+            iban: true
         },
         pago: {
             required: true
         },
         usuario: {
-            required: true
+            required: true,
+            minlength: 4,
         },
         contrasena: {
-            required: true
+            required: true,
+            complejidad: true
         },
         contrasena2: {
-            equalTo: contrasena
+            equalTo: '#contrasena'
         }
 
     }
@@ -102,7 +121,7 @@ $('#apellidos').focusout(function() {
 
 
 /*
-CAMBIO LABELS cifNif nombreEmpresa:
+CAMBIO LABELS CIF/NIF NOMBRE/EMPRESA:
 En el cmabio de radio seleccionado se cambian las labels de cifNif y nombreEmpresa y en caso de
 ser "Particular" se rellena el nombreEmpresa con la combinacion de Nombre y Apellidos
 */
@@ -112,11 +131,54 @@ $('input[name="demandante"]').on('change', function() {
         $('#nifCifLabel').html('CIF');
         $('#nombreEmpresaLabel').html('Empresa');
         $('#nombreEmpresa').val('');
-        checked=true;
+        checked = true;
     } else {
         $('#nifCifLabel').html('NIF');
         $('#nombreEmpresaLabel').html('Nombre');
         $('#nombreEmpresa').val($('#nombre').val() + ' ' + $('#apellidos').val());
-        checked=false;
+        checked = false;
     }
 });
+
+/*
+RELLENA USUARIO:
+Hacemos que al terminar de rellenar nombre y apellidos si no se ha cambaido el valor del demandante antes,
+nombreEmpresa se rellene con la combinacion de Nombre y Apellidos
+*/
+$('#email2').focusout(function() {
+    if ($('#email').val() == $('#email2').val()) {
+        $('#usuario').val($('#email').val());
+    }
+
+});
+
+/*
+MOSTRAR COMPLEJIDAD CONTRASEÑA CON JQUERY COMPLEXIFY
+*/
+$('#contrasena').focusin(function() {
+    $('#contrasena').complexify({
+        minimumChars: 6
+    }, function(valid, complexity) {
+        $('#complejidad').val(complexity);
+        valorComplejidad=complexity;
+
+        if (complexity < 20) {
+            $('#labelComplejidad').html('Contraseña debil');
+        } else if (complexity >= 20 && complexity < 40) {
+            $('#labelComplejidad').html('Contraseña adecuada');
+        } else {
+            $('#labelComplejidad').html('Contraseña fuerte');
+        }
+    });
+});
+
+/*
+COMPLEJIDAD MINIMA DE LA CONTRASEÑA
+*/
+jQuery.validator.addMethod('complejidad', function() {
+    if (valorComplejidad<20) {
+        return false;
+    } else {
+        return true;
+    }
+}, 'La complejidad minima debe ser "adecuada"');
