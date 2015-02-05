@@ -1,3 +1,5 @@
+
+var checked=false;//variable true si el radio Empresa esta seleccionado
 $('#formulario').validate({
     rules: {
         // simple rule, converted to {required:true}
@@ -23,23 +25,10 @@ $('#formulario').validate({
         demandante: {
             required: true
         },
-        cifNif: {
+        nifCif: {
             required: true,
-            cifES:false/* function() {
-                if ($('#demandante2').is(':checked')){
-                    return true;
-                } else {
-                    return false;
-                }
-            }*/,
-
-            nifES:true/* function() {
-                if ($('#demandante1').is(':checked')){
-                    return true;
-                } else {
-                    return false;
-                }
-            }*/
+            cifES:{depends:function(){if(checked===true){return true;}else{return false;}}},
+            nifES:{depends:function(){if(checked===false){return true;}else{return false;}}}
         },
         nombreEmpresa: {
             required: true
@@ -123,9 +112,11 @@ $('input[name="demandante"]').on('change', function() {
         $('#nifCifLabel').html('CIF');
         $('#nombreEmpresaLabel').html('Empresa');
         $('#nombreEmpresa').val('');
+        checked=true;
     } else {
         $('#nifCifLabel').html('NIF');
         $('#nombreEmpresaLabel').html('Nombre');
         $('#nombreEmpresa').val($('#nombre').val() + ' ' + $('#apellidos').val());
+        checked=false;
     }
 });
