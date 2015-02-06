@@ -12,8 +12,8 @@ $consulta_db->bind_result($resultado_db_localidad,$resultado_db_provincia);
 $provincia="";
 $localidades="";
 while($consulta_db->fetch()){
-$provincia=$resultado_db_localidad;
-$localidades.="<option id='".$resultado_db_provincia."'name='".$resultado_db_provincia."' value=>".$resultado_db_provincia."</option>";
+$provincia=$resultado_db_provincia;
+$localidades.="<option id='".$resultado_db_localidad."'name='".$resultado_db_localidad."' value=>".$resultado_db_localidad."</option>";
 }
 
 if($opcion_carga=="1"){
