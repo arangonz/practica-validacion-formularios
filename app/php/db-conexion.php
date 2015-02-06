@@ -1,7 +1,7 @@
 <?php
 
 $usuario_db="root";
-$contrasena_db="alumno";
+$contrasena_db="root";
 $host_db="localhost";
 $nombre_db="formulario";
 

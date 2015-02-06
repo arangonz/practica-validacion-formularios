@@ -217,10 +217,17 @@ $('#cp').focusout(function() {
     $.ajax({
         url: 'php/cargar-provincia-localidad.php',
         type: 'GET',
-        data: $('#cp'),
-        success: function() {
-            $('#localidad').html(provincia);
-            $('#provincia').html(localidades);
+        data:{cp: $('#cp').val(),opcionCarga:'1'},
+        success: function(provincia) {
+            $('#provincia').val(provincia);
+        }
+    });
+     $.ajax({
+        url: 'php/cargar-provincia-localidad.php',
+        type: 'GET',
+        data:{cp: $('#cp').val(),opcionCarga:'2'},
+        success: function(localidades) {
+            $('#localidad').html(localidades);
         }
     });
 
