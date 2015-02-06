@@ -1,6 +1,7 @@
 var checked = false; //variable true si el radio Empresa esta seleccionado
 var valorComplejidad = 0;
 $('#formulario').validate({
+    onkeyup: false,
     rules: {
         // simple rule, converted to {required:true}
         nombre: {
@@ -41,6 +42,20 @@ $('#formulario').validate({
                 }
             },
             nifES: {
+                depends: function() {
+                    if (checked === false) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            },
+
+            remote: {
+                param: {
+                    url: 'php/evaluar-nif.php',
+                    type: 'get'
+                },
                 depends: function() {
                     if (checked === false) {
                         return true;
@@ -93,6 +108,9 @@ $('#formulario').validate({
     messages: {
         email: {
             remote: jQuery.validator.format("El email introducido ya esta en uso.")
+        },
+        nifCif: {
+            remote: jQuery.validator.format("El NIF introducido ya esta en uso.")
         },
     }
 });
@@ -191,3 +209,19 @@ jQuery.validator.addMethod('complejidad', function() {
         return true;
     }
 }, 'La complejidad minima debe ser "adecuada"');
+
+/*
+COMPLETA PROVINCIAS y LOCALIDADES
+*/
+$('#cp').focusout(function() {
+    $.ajax({
+        url: 'php/cargar-provincia-localidad.php',
+        type: 'GET',
+        data: $('#cp'),
+        success: function() {
+            $('#localidad').html(provincia);
+            $('#provincia').html(localidades);
+        }
+    });
+
+});

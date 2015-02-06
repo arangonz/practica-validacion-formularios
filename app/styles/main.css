@@ -1,9 +1,21 @@
+body {
+    background-color: #C5E3F1;
+}
+.contenedor {
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-bottom: 5%;
+    background-color: #FFFFFF;
+    padding-left: 1%;
+    padding-right: 1%;
+    padding-top: 1%;
+}
 meter {
     width: 200px;
     height: 15px;
     display: block;
     margin-top: 5px;
 }
-#nombre,#apellidos,#telefono,#email,#demandante,#nifCif,#nombreEmpresa,#direccion,#cp,#localidad,#provincia,#pais,#iban,#pago,#usuario,#contrasena {
-	background-color: #FFF3DC;
+#nombre, #apellidos, #telefono, #email, #demandante, #nifCif, #nombreEmpresa, #direccion, #cp, #localidad, #provincia, #pais, #iban, #pago, #usuario, #contrasena {
+    background-color: #FFF3DC;
 }
