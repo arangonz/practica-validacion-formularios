@@ -77,7 +77,7 @@ $('#formulario').validate({
             maxlength: 5,
         },
         localidad: {
-            required: true
+            //required: true
         },
         provincia: {
             required: true
@@ -112,6 +112,26 @@ $('#formulario').validate({
         nifCif: {
             remote: jQuery.validator.format("El NIF introducido ya esta en uso.")
         },
+    },
+    submitHandler: function(form) {
+
+        var pago_seleccionado = $('#pago').val();
+        var texto_pago = "";
+        var pago_aceptado = "";
+        if (pago_seleccionado == 1) {
+            var texto_pago = 'Se va a proceder a dar su cuenta de alta y a pasarle su primera cuota mensual de un valor de 50€';
+        } else if (pago_seleccionado == 2) {
+            var texto_pago = 'Se va a proceder a dar su cuenta de alta y a pasarle su primera cuota trimestral de un valor de 140€'
+        } else if (pago_seleccionado == 3) {
+            var texto_pago = 'Se va a proceder a dar su cuenta de alta y a pasarle su primera cuota anual de un valor de 550€';
+        }
+
+        pago_aceptado = window.confirm(texto_pago);
+        if (pago_aceptado == true) {
+            form.submit();
+        }
+
+
     }
 });
 
@@ -181,6 +201,7 @@ $('#email2').focusout(function() {
 
 /*
 MOSTRAR COMPLEJIDAD CONTRASEÑA CON JQUERY COMPLEXIFY
+Cargamos los valores del meter para indicar la ocmpeljidad de la ocntraseña segun complexify y una label indicativa
 */
 $('#contrasena').focusin(function() {
     $('#contrasena').complexify({
@@ -201,6 +222,7 @@ $('#contrasena').focusin(function() {
 
 /*
 COMPLEJIDAD MINIMA DE LA CONTRASEÑA
+metodo para validar que la contraseña solo sea valida si supera cierto numero de complejidad segun complexify
 */
 jQuery.validator.addMethod('complejidad', function() {
     if (valorComplejidad < 20) {
@@ -212,20 +234,27 @@ jQuery.validator.addMethod('complejidad', function() {
 
 /*
 COMPLETA PROVINCIAS y LOCALIDADES
+consultas via ajax  para cragar provincias y localidades segun el valor del Cp
 */
 $('#cp').focusout(function() {
     $.ajax({
         url: 'php/cargar-provincia-localidad.php',
         type: 'GET',
-        data:{cp: $('#cp').val(),opcionCarga:'1'},
+        data: {
+            cp: $('#cp').val(),
+            opcionCarga: '1'
+        },
         success: function(provincia) {
             $('#provincia').val(provincia);
         }
     });
-     $.ajax({
+    $.ajax({
         url: 'php/cargar-provincia-localidad.php',
         type: 'GET',
-        data:{cp: $('#cp').val(),opcionCarga:'2'},
+        data: {
+            cp: $('#cp').val(),
+            opcionCarga: '2'
+        },
         success: function(localidades) {
             $('#localidad').html(localidades);
         }
